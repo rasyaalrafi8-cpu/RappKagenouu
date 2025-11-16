@@ -1,1 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Rapp Kagenouu</title>
+    <style>
+        :root {
+            --primary-blue: #1565c0;
+            --dark-blue: #0d47a1;
+            --light-blue: #42a5f5;
+            --accent-blue: #90caf9;
+            --ocean-blue: #0288d1;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #424242;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-blue), var(--primary-blue), var(--ocean-blue));
+            color: var(--white);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--accent-blue);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .payment-section {
+            margin-bottom: 30px;
+        }
+        
+        .payment-method {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .payment-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+            color: var(--dark-blue);
+        }
+        
+        .payment-details {
+            margin-bottom: 15px;
+        }
+        
+        .payment-number {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .qris-image {
+            text-align: center;
+            margin: 15px 0;
+        }
+        
+        .qris-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: var(--primary-blue);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn:hover {
+            background-color: var(--dark-blue);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            border: 2px solid var(--accent-blue);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--accent-blue);
+            color: var(--dark-blue);
+        }
+        
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .contact-section {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid var(--accent-blue);
+        }
+        
+        .contact-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.3s;
+        }
+        
+        .contact-link:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+        
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 1.5rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transform: translateX(150%);
+            transition: transform 0.5s;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Payment Rapp Kagenouu</h1>
+            <p class="subtitle">Lakukan pembayaran dengan metode berikut</p>
+        </header>
+        
+        <div class="payment-section">
+            <div class="payment-method">
+                <div class="payment-title">
+                    <div class="payment-icon">D</div>
+                    <h2>DANA</h2>
+                </div>
+                <div class="payment-details">
+                    <p>Transfer ke nomor DANA berikut:</p>
+                    <div class="payment-number">
+                        <span id="dana-number">085770716300</span>
+                        <button class="btn btn-secondary" onclick="copyToClipboard('dana-number')">Salin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-method">
+                <div class="payment-title">
+                    <div class="payment-icon">G</div>
+                    <h2>GOPAY</h2>
+                </div>
+                <div class="payment-details">
+                    <p>Transfer ke nomor GOPAY berikut:</p>
+                    <div class="payment-number">
+                        <span id="gopay-number">085770716300</span>
+                        <button class="btn btn-secondary" onclick="copyToClipboard('gopay-number')">Salin</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-method">
+                <div class="payment-title">
+                    <div class="payment-icon">Q</div>
+                    <h2>QRIS</h2>
+                </div>
+                <div class="payment-details">
+                    <p>Scan QR Code berikut untuk pembayaran:</p>
+                    <div class="qris-image">
+                        <img src="https://img1.pixhost.to/images/10198/661433292_awang.jpg" alt="QRIS Payment">
+                    </div>
+                    <div class="button-group">
+                        <button class="btn" onclick="downloadQRIS()">Download QRIS</button>
+                        <button class="btn btn-secondary" onclick="viewQRIS()">Lihat QRIS</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="contact-section">
+            <h2>Hubungi Kami</h2>
+            <div class="contact-links">
+                <a href="https://wa.me/6285770716300" class="contact-link" target="_blank">
+                    <div class="contact-icon">📱</div>
+                    <div>
+                        <h3>WhatsApp</h3>
+                        <p>+62 857-7707-1630</p>
+                    </div>
+                </a>
+                
+                <a href="https://chat.whatsapp.com/GagenbyOwP04wJOmpiuDvw?mode=wwt" class="contact-link" target="_blank">
+                    <div class="contact-icon">👥</div>
+                    <div>
+                        <h3>Grup WhatsApp</h3>
+                        <p>Join komunitas kami</p>
+                    </div>
+                </a>
+                
+                <a href="https://linktr.ee/rappKagenouu" class="contact-link" target="_blank">
+                    <div class="contact-icon">📢</div>
+                    <div>
+                        <h3>Saluran WhatsApp</h3>
+                        <p>Linktree rappKagenouu</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <footer>
+            <p></p>
+        </footer>
+    </div>
+    
+    <div class="notification" id="notification">
+        Nomor berhasil disalin!
+    </div>
 
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText;
+            
+            // Buat elemen textarea sementara
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            
+            // Pilih dan salin teks
+            textarea.select();
+            document.execCommand('copy');
+            
+            // Hapus elemen sementara
+            document.body.removeChild(textarea);
+            
+            // Tampilkan notifikasi
+            showNotification('Nomor berhasil disalin!');
+        }
+        
+        function downloadQRIS() {
+            // Membuat tautan download untuk gambar QRIS
+            const link = document.createElement('a');
+            link.href = 'https://img1.pixhost.to/images/10198/661433292_awang.jpg';
+            link.download = 'qris_payment.jpg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            showNotification('QRIS berhasil didownload!');
+        }
+        
+        function viewQRIS() {
+            // Membuka gambar QRIS di tab baru
+            window.open('https://img1.pixhost.to/images/10198/661433292_awang.jpg', '_blank');
+        }
+        
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.innerText = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
